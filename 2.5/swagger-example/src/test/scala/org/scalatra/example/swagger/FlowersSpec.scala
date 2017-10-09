@@ -14,8 +14,8 @@ class FlowersSpec extends ScalatraSpec { def is =
     "should return status 200"                  ! slugWorks
                                                 end
 
-  implicit val swagger = new FlowersSwagger
-  addServlet(new FlowersController, "/flowers/*")
+  implicit val swagger = new CharactersSwagger
+  addServlet(new CharactersController, "/flowers/*")
 
   def root200 = get("/flowers") {
     status must_== 200

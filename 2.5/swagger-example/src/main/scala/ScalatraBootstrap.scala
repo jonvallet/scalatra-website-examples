@@ -4,10 +4,10 @@ import javax.servlet.ServletContext
 
 class ScalatraBootstrap extends LifeCycle {
 
-  implicit val swagger = new FlowersSwagger
+  implicit val swagger = new CharactersSwagger
 
   override def init(context: ServletContext) {
-    context.mount(new FlowersController, "/flowers", "flowers")
+    context.mount(new CharactersController, "/characters", "characters")
     context.mount (new ResourcesApp, "/api-docs")
   }
 }

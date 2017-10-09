@@ -6,13 +6,13 @@ import org.scalatra.swagger.{ApiInfo, NativeSwaggerBase, Swagger}
 
 class ResourcesApp(implicit val swagger: Swagger) extends ScalatraServlet with NativeSwaggerBase
 
-object FlowersSwagger{
+object CharactersSwagger{
   val Info = ApiInfo(
-    "The Flowershop API",
-    "Docs for the Flowers API",
+    "The Characters API",
+    "Docs for the Characters API",
     "http://scalatra.org",
     "apiteam@scalatra.org",
     "MIT",
     "http://opensource.org/licenses/MIT")
 }
-class FlowersSwagger extends Swagger("2.0", "1", FlowersSwagger.Info)
+class CharactersSwagger extends Swagger("2.0", "1", CharactersSwagger.Info)
