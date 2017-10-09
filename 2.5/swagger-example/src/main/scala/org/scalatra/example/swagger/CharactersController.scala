@@ -3,6 +3,8 @@ package org.scalatra.example.swagger
 import org.scalatra._
 import org.scalatra.swagger.ResponseMessage
 
+import scala.util.{Failure, Success}
+
 // Swagger-specific Scalatra imports
 import org.scalatra.swagger._
 
@@ -34,7 +36,10 @@ class CharactersController(implicit val swagger: Swagger) extends ScalatraServle
       )
 
   get("/", operation(getCharacters)) {
-    MarvelData.all
+    new MarvelClient().getAll match {
+      case Success(value) => value
+      case Failure(error) => error
+    }
   }
 
   val errorResponse = ResponseMessage(404, "Character Not Found")
@@ -47,25 +52,11 @@ class CharactersController(implicit val swagger: Swagger) extends ScalatraServle
       responseMessage errorResponse)
 
   get("/:characterId", operation(findByCharacterId)) {
-    MarvelData.all find (_.characterId == params("characterId")) match {
-      case Some(b) => b
-      case None => halt(404, errorResponse)
+    new MarvelClient().getCharacter(params("characterId")) match {
+      case Success(value) => value
+      case Failure(_) => halt(404, errorResponse)
     }
   }
 }
 
 
-// A Flower object to use as a data model
-case class Character(characterId: String, powers: String)
-
-// An amazing datastore!
-object MarvelData {
-
-  /**
-   * Some fake flowers data so we can simulate retrievals.
-   */
-  var all = List(
-    Character("100001", "Fly"),
-    Character("100002", "Strong"),
-    Character("100003", "Lighting"))
-}
